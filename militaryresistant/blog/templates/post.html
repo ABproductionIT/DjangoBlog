@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ post.title }} — Military Resistant</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 15px 20px;
+      text-align: center;
+    }
+    .container {
+      max-width: 900px;
+      margin: 20px auto;
+      background: white;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    article {
+      overflow: auto;
+    }
+    article h2 {
+      color: #333;
+    }
+    article img {
+      float: left;
+      margin: 0 15px 10px 0;
+      width: 100%;
+      height: auto;
+    }
+    article p {
+      color: #666;
+      text-align: justify;
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 20px;
+      color: #0066cc;
+      text-decoration: none;
+    }
+    .back-link:hover {
+      text-decoration: underline;
+    }
+    footer {
+      text-align: center;
+      padding: 10px;
+      background: #333;
+      color: white;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Military Resistant Architecture</h1>
+    <p>Научные статьи о военной архитектуре и фортификации</p>
+  </header>
+  <div class="container">
+    <article>
+      <h2>{{ post.title }}</h2>
+      {% if post.main_image %}
+      <img src="{{ post.main_image.url }}" alt="🖼">
+      {% endif %}
+      <span>{{ content|safe }}</span>
+      {% if post.publication_date %}
+      <p><strong>Published:</strong> {{ post.publication_date|date:"d M Y H:i" }}</p>
+      {% endif %}
+    </article>
+    <a href="{% url 'index' %}" class="back-link">←</a>
+  </div>
+  <footer>
+    <p>&copy; 2025 Military Resistant.</p>
+  </footer>
+</body>
+</html>

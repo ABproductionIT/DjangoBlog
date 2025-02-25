@@ -1,0 +1,97 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Military Resistant — блог с научными статьями о военной архитектуре, фортификациях и инженерных решений.">
+  <meta name="keywords" content="военная архитектура, фортификации, инженерные сооружения, укрепления, военная история">
+  <meta name="author" content="Military Resistant">
+  <title>Military Resistant — Военная архитектура и фортификация</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 15px 20px;
+      text-align: center;
+    }
+    .container {
+      max-width: 900px;
+      margin: 20px auto;
+      background: white;
+      padding: 20px;
+      box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+    }
+    .article {
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 15px;
+      margin-bottom: 15px;
+      overflow: auto;
+      cursor: pointer;
+      /* Делаем текст невыбираемым */
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+    }
+    .article h2 {
+      color: #333;
+    }
+    .article img {
+      float: left;
+      margin: 0 15px 10px 0;
+      max-width: 40%;
+      height: auto;
+    }
+    .article p {
+      color: #666;
+      text-align: justify;
+    }
+    .read-more {
+      display: inline-block;
+      margin-top: 10px;
+      color: #0066cc;
+      text-decoration: none;
+    }
+    .read-more:hover {
+      text-decoration: underline;
+    }
+    footer {
+      text-align: center;
+      padding: 10px;
+      background: #333;
+      color: white;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Military Resistant Architecture</h1>
+    <p>Научные статьи о военной архитектуре и фортификации</p>
+  </header>
+  <div class="container">
+    {% for post in posts %}
+    <div class="article" onclick="window.location.href='{% url 'post_detail' post.id %}';">
+      <h2>{{ post.title }}</h2>
+      {% if post.main_image %}
+        <img src="{{ post.main_image.url }}" alt="{{ post.title }}">
+      {% endif %}
+      <p>{{ post.content|truncatewords:30 }}</p>
+      <a href="{% url 'post_detail' post.id %}" class="read-more" onclick="event.stopPropagation();">Читать далее...</a>
+    </div>
+    {% empty %}
+      <p>Пока нет опубликованных постов.</p>
+    {% endfor %}
+  </div>
+  <footer>
+    <p>&copy; 2025 Military Resistant. Все права защищены.</p>
+  </footer>
+</body>
+</html>
