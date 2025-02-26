@@ -1,9 +1,18 @@
 from django.contrib import admin
 from django.utils.html import format_html
 
-from .models import Post, PostImage
+from .models import Post, PostImage, SiteInfo
 
 admin.site.register(Post)
+
+
+@admin.register(SiteInfo)
+class SiteInfoAdmin(admin.ModelAdmin):
+    def has_add_permission(self, request):
+        """Запрещает добавление новой записи, если уже есть одна."""
+        if SiteInfo.objects.exists():
+            return False
+        return super().has_add_permission(request)
 
 
 @admin.register(PostImage)

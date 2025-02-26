@@ -1,5 +1,23 @@
 from django.db import models
 from django.contrib.auth.models import User  # если author — пользователь
+from django.core.exceptions import ValidationError
+
+class SiteInfo(models.Model):
+    title = models.CharField(max_length=255, verbose_name="Название сайта")
+    description = models.TextField(verbose_name="Краткое описание")
+
+    def save(self, *args, **kwargs):
+        if SiteInfo.objects.exists() and not self.pk:
+            raise ValidationError("Можно создать только одну запись SiteInfo.")
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = "Информация о сайте"
+        verbose_name_plural = "Информация о сайте"
+
 
 class Post(models.Model):
     title = models.CharField(max_length=100)

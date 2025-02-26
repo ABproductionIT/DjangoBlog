@@ -3,7 +3,7 @@ import mimetypes
 from django.conf import settings
 from django.http import FileResponse, Http404
 from django.shortcuts import render, get_object_or_404
-from .models import Post, PostImage
+from .models import Post, PostImage, SiteInfo
 import os
 import re
 from django.utils.safestring import mark_safe
@@ -39,8 +39,11 @@ def replace_image_tags(content, images_dict):
 
 
 def index(request):
+    site_name_info=SiteInfo.objects.all().last()
+    title = site_name_info.title
+    description = site_name_info.description
     posts = Post.objects.filter(posted=True)  # выводим только опубликованные посты
-    return render(request, 'index.html', {'posts': posts})
+    return render(request, 'index.html', {'posts': posts, 'site_name': title, 'description': description})
 
 def post_detail(request, pk):
     ret_post_img_dict = {}
