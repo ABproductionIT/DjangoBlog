@@ -30,7 +30,7 @@ def replace_image_tags(content, images_dict):
     def replacer(match):
         tag = match.group(0)  # Найденный $imageN$
 
-        return f'<p> <img src="{images_dict.get(tag, "#")}" alt="\n🖼\n"> </p>'  # Если нет URL, подставляем #
+        return f'<p> <img src="data:image/png;base64,{images_dict.get(tag)}" alt="\n🖼\n"> </p>'  # Если нет URL, подставляем #
 
     regex = r"\$image\d+\$"  # Регулярное выражение для поиска $imageN$
     return mark_safe(re.sub(regex, replacer, content))
@@ -52,7 +52,7 @@ def post_detail(request, pk):
     tags = find_image_tags(post.content)
     p_img = PostImage.objects.filter(tag__in=tags)
     for el in p_img:
-        ret_post_img_dict[el.tag] = el.image.url
+        ret_post_img_dict[el.tag] = el.image
     print(ret_post_img_dict)
 
     new_content = replace_image_tags(post.content, ret_post_img_dict)
