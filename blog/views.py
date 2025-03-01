@@ -23,7 +23,9 @@ def replace_image_tags(content, images_dict):
 
     def replacer(match):
         tag = match.group(0)  # Найденный $imageN$
-        img_base64 = images_dict.get(tag, None)
+        obj = images_dict.get(tag, None)
+        img_base64 = base64.b64encode(obj.main_image).decode('utf-8')
+
         if img_base64:
             return f'<p> <img src="data:image/png;base64,{img_base64}" alt="\n🖼\n"> </p>'
         return tag  # Если изображения нет, оставляем как есть

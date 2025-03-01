@@ -45,8 +45,6 @@ class PostImageAdmin(admin.ModelAdmin):
         Отображает превью изображения в админке.
         """
         if obj.image:
-            import base64
-            from django.utils.html import format_html
             img_base64 = base64.b64encode(obj.image).decode('utf-8')
             return format_html(f'<img src="data:image/png;base64,{img_base64}" width="100" />')
         return "Нет изображения"
