@@ -21,7 +21,7 @@ class PostImageAdminForm(forms.ModelForm):
 
 
 class PostAdminForm(forms.ModelForm):
-    main_image = forms.ImageField(required=False)  # Поле для загрузки изображений
+    main_image = forms.ImageField(required=False)  # Поле загрузки изображений
 
     class Meta:
         model = Post
@@ -44,8 +44,13 @@ class PostAdminForm(forms.ModelForm):
         """
         image = self.cleaned_data.get('main_image')
 
-        if image:
-            return image.file.read()  # Используем image.file.read(), чтобы обработать файлы Django
-        elif self.instance and isinstance(self.instance.main_image, memoryview):
-            return bytes(self.instance.main_image)  # Преобразуем memoryview в bytes и сохраняем
+        if isinstance(image, forms.FileField):
+            return image.read()  # Если это новый файл, читаем его в байты
+
+        if isinstance(image, memoryview):
+            return bytes(image)  # Если уже сохраненное изображение — memoryview, конвертируем в байты
+
+        if self.instance and isinstance(self.instance.main_image, memoryview):
+            return bytes(self.instance.main_image)  # Оставляем старое изображение, если нового нет
+
         return None  # Если изображения нет вообще
