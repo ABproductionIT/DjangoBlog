@@ -68,7 +68,7 @@
     <article>
       <h2>{{ post.title }}</h2>
       {% if post.main_image %}
-      <img src="{{ post.main_image.url }}" alt="🖼">
+      <img src="data:image/png;base64,{{ post.main_image }}" alt="🖼">
       {% endif %}
       <span>{{ content|safe }}</span>
       {% if post.publication_date %}
