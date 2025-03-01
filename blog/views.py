@@ -32,6 +32,16 @@ def replace_image_tags(content, images_dict):
     return mark_safe(re.sub(regex, replacer, content))
 
 
+def index(request):
+    site_name_info=SiteInfo.objects.all().last()
+    if site_name_info:
+        title = site_name_info.title
+        description = site_name_info.description
+    else:
+        title, description  = "DjangoBlog", "Simple blog project on Django"
+    posts = Post.objects.filter(posted=True)  # выводим только опубликованные посты
+    return render(request, 'index.html', {'posts': posts, 'site_name': title, 'description': description})
+
 def post_detail(request, pk):
     ret_post_img_dict = {}
     post = get_object_or_404(Post, pk=pk)
