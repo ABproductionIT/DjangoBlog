@@ -22,7 +22,7 @@ class SiteInfo(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField()
-    main_image = models.BinaryField(null=True, blank=True, editable=True)  # Храним изображение в бинарном формате
+    main_image = models.BinaryField(editable=True)  # Храним изображение в бинарном формате
     publication_date = models.DateTimeField(null=True, blank=True, help_text="Выберите дату публикации")
     posted = models.BooleanField(default=False, help_text="Если отмечено, пост виден всем")
     date_posted = models.DateTimeField(auto_now_add=True)
