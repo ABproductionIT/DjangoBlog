@@ -61,14 +61,14 @@
 </head>
 <body>
   <header>
-    <h1>Military Resistant Architecture</h1>
-    <p>Научные статьи о военной архитектуре и фортификации</p>
+    <h1>{{ site_name }}</h1>
+    <p>{{ description }}</p>
   </header>
   <div class="container">
     <article>
       <h2>{{ post.title }}</h2>
-      {% if post.main_image %}
-      <img src="data:image/png;base64,{{ post.main_image }}" alt="🖼">
+      {% if post_main_image %}
+      <img src="data:image/png;base64,{{ post_main_image }}" alt="🖼">
       {% endif %}
       <span>{{ content|safe }}</span>
       {% if post.publication_date %}

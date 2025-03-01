@@ -44,8 +44,15 @@ def index(request):
     return render(request, 'index.html', {'posts': posts, 'site_name': title, 'description': description})
 
 def post_detail(request, pk):
+    site_name_info=SiteInfo.objects.all().last()
+    if site_name_info:
+        title = site_name_info.title
+        description = site_name_info.description
+    else:
+        title, description  = "DjangoBlog", "Simple blog project on Django"
     ret_post_img_dict = {}
     post = get_object_or_404(Post, pk=pk)
+    post_main_image = base64.b64encode(post.main_image).decode('utf-8')
 
     # Находим все теги вида $imageN$
     tags = find_image_tags(post.content)
@@ -60,7 +67,11 @@ def post_detail(request, pk):
     # Заменяем теги $imageN$ на изображения
     new_content = replace_image_tags(post.content, ret_post_img_dict)
 
-    return render(request, 'post.html', {'post': post, 'content': new_content})
+    return render(request, 'post.html', {'post': post,
+                                         'post_main_image':post_main_image,
+                                         'content': new_content,
+                                         'site_name': title,
+                                         'description': description})
 
 def image_view(request, post_id):
     """
