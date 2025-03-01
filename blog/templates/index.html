@@ -7,7 +7,7 @@
 <!--  <meta name="description" content="some desc">-->
 <!--  <meta name="keywords" content="tags">-->
 <!--  <meta name="author" content="author">-->
-  <title>Military Resistant — Военная архитектура и фортификация</title>
+  <title>{{ site_name }} - {{ description }}</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -84,14 +84,14 @@
         <img src="{{ post.main_image.url }}" alt="{{ post.title }}">
       {% endif %}
       <p>{{ post.content|truncatewords:30 }}</p>
-      <a href="{% url 'post_detail' post.id %}" class="read-more" onclick="event.stopPropagation();">Читать далее...</a>
+      <a href="{% url 'post_detail' post.id %}" class="read-more" onclick="event.stopPropagation();">read more...</a>
     </div>
     {% empty %}
       <p>Пока нет опубликованных постов.</p>
     {% endfor %}
   </div>
   <footer>
-    <p>&copy; 2025 Military Resistant. Все права защищены.</p>
+    <p>&copy; 2025 {{ site_name }}. </p>
   </footer>
 </body>
 </html>
