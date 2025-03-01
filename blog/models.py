@@ -22,10 +22,8 @@ class SiteInfo(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField()
-    main_image = models.ImageField(upload_to='post_images/', null=True, blank=True)
-    # Дата публикации, которую можно выбирать вручную (не устанавливается автоматически)
+    main_image = models.BinaryField(null=True, blank=True, editable=True)  # Храним изображение в бинарном формате
     publication_date = models.DateTimeField(null=True, blank=True, help_text="Выберите дату публикации")
-    # Флажок: опубликован пост или нет
     posted = models.BooleanField(default=False, help_text="Если отмечено, пост виден всем")
     date_posted = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -40,8 +38,9 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+
 class PostImage(models.Model):
-    image = models.ImageField(upload_to='post_images/')
+    image = models.BinaryField(editable=True)  # Хранение изображения в базе данных
     tag = models.CharField(max_length=20, blank=True, unique=True)
 
     def save(self, *args, **kwargs):
@@ -55,5 +54,5 @@ class PostImage(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.tag}"
+        return self.tag
 

@@ -1,12 +1,10 @@
-import mimetypes
-
-from django.conf import settings
-from django.http import FileResponse, Http404
 from django.shortcuts import render, get_object_or_404
 from .models import Post, PostImage, SiteInfo
-import os
 import re
 from django.utils.safestring import mark_safe
+from django.http import HttpResponse, Http404
+import mimetypes
+
 
 def find_image_tags(content):
     """
@@ -40,8 +38,11 @@ def replace_image_tags(content, images_dict):
 
 def index(request):
     site_name_info=SiteInfo.objects.all().last()
-    title = site_name_info.title
-    description = site_name_info.description
+    if site_name_info:
+        title = site_name_info.title
+        description = site_name_info.description
+    else:
+        title, description  = "DjangoBlog", "Simple blog project on Django"
     posts = Post.objects.filter(posted=True)  # выводим только опубликованные посты
     return render(request, 'index.html', {'posts': posts, 'site_name': title, 'description': description})
 
@@ -59,12 +60,16 @@ def post_detail(request, pk):
 
     return render(request, 'post.html', {'post': post, 'content': new_content})
 
-def image_view(request, filename):
-    # Формируем полный путь к файлу
-    file_path = os.path.join(settings.MEDIA_ROOT, 'post_images', filename)
-    if os.path.exists(file_path):
-        # Определяем MIME-тип файла
-        content_type, _ = mimetypes.guess_type(file_path)
-        return FileResponse(open(file_path, 'rb'), content_type=content_type)
-    else:
+
+def image_view(request, post_id):
+    """
+    Отдает изображение из базы данных по ID поста.
+    """
+    post = get_object_or_404(Post, id=post_id)
+
+    if not post.main_image:
         raise Http404("Изображение не найдено")
+
+    # Определяем MIME-тип (по умолчанию image/png)
+    content_type, _ = mimetypes.guess_type("image.png")  # Можно менять на "image/jpeg", если нужны JPG
+    return HttpResponse(post.main_image, content_type=content_type)
