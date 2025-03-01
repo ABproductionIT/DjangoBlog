@@ -46,7 +46,7 @@ def index(request):
         post_title = post.title
         post_short_content = post.content[:150]
         post_main_image = base64.b64encode(post.main_image).decode('utf-8')
-        ret = {"title":post_title, "content":post_short_content, "main_image":post_main_image}
+        ret = {"title":post_title, "content":post_short_content, "main_image":post_main_image, "id":post.id}
         ret_posts_list.append(ret)
 
     return render(request, 'index.html', {'posts': ret_posts_list, 'site_name': title, 'description': description})
