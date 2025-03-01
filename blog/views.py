@@ -41,7 +41,15 @@ def index(request):
     else:
         title, description  = "DjangoBlog", "Simple blog project on Django"
     posts = Post.objects.filter(posted=True)  # выводим только опубликованные посты
-    return render(request, 'index.html', {'posts': posts, 'site_name': title, 'description': description})
+    ret_posts_list = []
+    for post in posts:
+        post_title = post.title
+        post_short_content = post.content[:150]
+        post_main_image = base64.b64encode(post.main_image).decode('utf-8')
+        ret = {"title":post_title, "content":post_short_content, "main_image":post_main_image}
+        ret_posts_list.append(ret)
+
+    return render(request, 'index.html', {'posts': ret_posts_list, 'site_name': title, 'description': description})
 
 def post_detail(request, pk):
     site_name_info=SiteInfo.objects.all().last()
