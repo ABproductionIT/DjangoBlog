@@ -1,11 +1,6 @@
-from django.contrib import admin
-from django.utils.html import format_html
-
 from .models import Post, PostImage, SiteInfo
 from .forms import PostImageAdminForm
-
 from django.contrib import admin
-from .models import Post
 from .forms import PostAdminForm
 import base64
 from django.utils.html import format_html
@@ -29,6 +24,7 @@ class PostAdmin(admin.ModelAdmin):
     readonly_fields = ('main_image_preview',)  # Добавляем превью в карточку редактирования
 
 admin.site.register(Post, PostAdmin)
+
 
 
 

@@ -31,5 +31,5 @@ class PostAdminForm(forms.ModelForm):
         """
         image = self.cleaned_data.get('main_image')
         if image:
-            return image.read()  # Преобразуем изображение в бинарный формат
-        return image
+            return image.read()  # Преобразуем изображение в bytes
+        return None  # Если изображение не загружено
