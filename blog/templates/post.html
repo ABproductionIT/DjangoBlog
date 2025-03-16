@@ -70,7 +70,7 @@
       {% if post_main_image %}
       <img src="data:image/png;base64,{{ post_main_image }}" alt="🖼">
       {% endif %}
-      <span>{{ content|safe }}</span>
+      <span>{{ content|linebreaksbr }}</span>
       {% if post.publication_date %}
       <p><strong>Published:</strong> {{ post.publication_date|date:"d M Y H:i" }}</p>
       {% endif %}
