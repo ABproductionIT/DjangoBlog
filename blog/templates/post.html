@@ -1,84 +1,17 @@
-{% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ post.title }} — Military Resistant</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background-color: #333;
-      color: #fff;
-      padding: 15px 20px;
-      text-align: center;
-    }
-    .container {
-      max-width: 900px;
-      margin: 20px auto;
-      background: white;
-      padding: 20px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    article {
-      overflow: auto;
-    }
-    article h2 {
-      color: #333;
-    }
-    article img {
-      float: left;
-      margin: 0 15px 10px 0;
-      width: 100%;
-      height: auto;
-    }
-    article p {
-      color: #666;
-      text-align: justify;
-    }
-    .back-link {
-      display: inline-block;
-      margin-top: 20px;
-      color: #0066cc;
-      text-decoration: none;
-    }
-    .back-link:hover {
-      text-decoration: underline;
-    }
-    footer {
-      text-align: center;
-      padding: 10px;
-      background: #333;
-      color: white;
-      margin-top: 20px;
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <h1>{{ site_name }}</h1>
-    <p>{{ description }}</p>
-  </header>
-  <div class="container">
-    <article>
-      <h2>{{ post.title }}</h2>
-      {% if post_main_image %}
-      <img src="data:image/png;base64,{{ post_main_image }}" alt="🖼">
-      {% endif %}
-      <span>{{ content|linebreaksbr }}</span>
-      {% if post.publication_date %}
-      <p><strong>Published:</strong> {{ post.publication_date|date:"d M Y H:i" }}</p>
-      {% endif %}
-    </article>
-    <a href="{% url 'index' %}" class="back-link">←</a>
-  </div>
-  <footer>
-    <p>&copy; 2025 Military Resistant.</p>
-  </footer>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %} {{ post.title }} {% endblock %}
+
+{% block content %}
+  <article>
+    <h2>{{ post.title }}</h2>
+    {% if post.main_image %}
+    <img src="data:image/png;base64,{{ post.main_image }}" alt="{{ post.title }}">
+    {% endif %}
+    <p>{{ content|linebreaksbr }}</p>
+    {% if post.publication_date %}
+    <p><strong>Published:</strong> {{ post.publication_date|date:"d M Y H:i" }}</p>
+    {% endif %}
+  </article>
+  <a href="{% url 'index' %}" class="back-link">← Назад</a>
+{% endblock %}
