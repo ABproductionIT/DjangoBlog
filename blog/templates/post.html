@@ -6,7 +6,7 @@
   <article>
     <h2>{{ post.title }}</h2>
     {% if post_main_image %}
-    <img src="data:image/png;base64,{{ post.main_image }}" alt="{{ post.title }}">
+    <img src="data:image/png;base64,{{ post_main_image }}" alt="{{ post.title }}">
     {% endif %}
     <p>{{ content|linebreaksbr }}</p>
     {% if post.publication_date %}
