@@ -68,10 +68,10 @@
   </style>
 </head>
 <body>
-  <header>
-    <h1>{{ site_name }}</h1>
-    <p>{{ description }}</p>
-  </header>
+<header onclick="window.location.href='{% url 'index' %}';" style="cursor: pointer;">
+  <h1>{{ site_name }}</h1>
+  <p>{{ description }}</p>
+</header>
 
   <div class="container">
     {% block content %}{% endblock %}
