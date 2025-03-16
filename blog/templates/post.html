@@ -5,7 +5,7 @@
 {% block content %}
   <article>
     <h2>{{ post.title }}</h2>
-    {% if post.main_image %}
+    {% if post_main_image %}
     <img src="data:image/png;base64,{{ post.main_image }}" alt="{{ post.title }}">
     {% endif %}
     <p>{{ content|linebreaksbr }}</p>
@@ -13,5 +13,5 @@
     <p><strong>Published:</strong> {{ post.publication_date|date:"d M Y H:i" }}</p>
     {% endif %}
   </article>
-  <a href="{% url 'index' %}" class="back-link">← Назад</a>
+  <a href="{% url 'index' %}" class="back-link">←Home</a>
 {% endblock %}
