@@ -1,7 +1,40 @@
 {% extends "base.html" %}
 
 {% block title %} {{ post.title }} {% endblock %}
-
+ <style>
+    .container {
+      max-width: 900px;
+      margin: 20px auto;
+      background: white;
+      padding: 20px;
+      box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+    }
+    .article {
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 15px;
+      margin-bottom: 15px;
+      overflow: auto;
+      cursor: pointer;
+      /* Делаем текст невыбираемым */
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+    }
+    .article h2 {
+      color: #333;
+    }
+    .article img {
+      float: left;
+      margin: 0 15px 10px 0;
+      max-width: 40%;
+      height: auto;
+    }
+    .article p {
+      color: #666;
+      text-align: justify;
+    }
+ </style>
 {% block content %}
   <article>
     <h2>{{ post.title }}</h2>
